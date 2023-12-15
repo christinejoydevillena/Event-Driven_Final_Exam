@@ -232,8 +232,18 @@ const TransactionManagement = () => {
   };
   
   const filteredProducts = products.filter((product) => product.stock > 0);
+  const clearCart = () => {
+    setCartItems([]); 
+    const updatedProducts = products.map((product) => {
+      const cartItem = cartItems.find((item) => item.id === product.id);
+      if (cartItem) {
+        return { ...product, stock: product.stock + cartItem.quantity };
+      }
+      return product;
+    });
+    setProducts(updatedProducts);
+  };
 
-  
 
   return (
     <div className="col-md-12">
@@ -259,9 +269,9 @@ const TransactionManagement = () => {
       </div>
       <hr style={{ margin: '30px 0' }} />
       <div style={{ marginTop: '20px' }}>
-        <button onClick={() => setCartItems([])} className="btn btn-primary me-3">
-          Clear Cart
-        </button>
+      <button onClick={clearCart} className="btn btn-primary me-3">
+       Clear Cart
+      </button>
       </div>
       <div style={{ marginTop: '20px' }}>
         {cartItems.length > 0 && (
