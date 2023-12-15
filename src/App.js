@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
-import CategoryManagement from './CategoryManagement';
-import ProductManagement from './ProductManagement';
-import ProductList from './ProductList';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import ProductManagement from './components/ProductManagement2';
+import StockManagement from './components/StockManagement';
+import TransactionManagement from './components/TransactionManagement';
+import TransactionReport from './components/TransactionReport';
+import CategoryManagement from './components/CategoryManagement';
 
 const App = () => {
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
-
-  const handleProductSubmit = (product) => {
-    setProducts([...products, product]);
-  };
-
-  const handleProductDelete = (productId) => {
-    setProducts(products.filter((product) => product.id !== productId));
-  };
-
   return (
-    <div>
-      <CategoryManagement categories={categories} setCategories={setCategories} />
-      <ProductManagement categories={categories} onSubmit={handleProductSubmit} />
-      <ProductList products={products} onDelete={handleProductDelete} />
-    </div>
+    <Router>
+      <div>
+        <Navbar />
+        <div className="container mt-4">
+          <Routes>
+            <Route path="/products" element={<ProductManagement/>} />
+            <Route path="/stocks" element={<StockManagement/>} />
+            <Route path="/transactions" element={<TransactionManagement/>} />
+            <Route path="/categories" element={<CategoryManagement/>} />
+            <Route path="/reports" element={<TransactionReport />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 };
 
